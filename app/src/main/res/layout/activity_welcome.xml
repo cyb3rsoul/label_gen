@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/white"
+    android:padding="32dp">
+
+    <!-- App Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Генератор на Етикети"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#2C3E50"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Company Logo -->
+    <ImageView
+        android:id="@+id/companyLogo"
+        android:layout_width="240dp"
+        android:layout_height="160dp"
+        android:src="@drawable/company_logo"
+        android:scaleType="fitCenter"
+        android:layout_marginBottom="48dp" />
+
+    <!-- Progress Indicator -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:indeterminateTint="#3498DB" />
+
+    <!-- Status Text -->
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Свързване с принтера..."
+        android:textSize="18sp"
+        android:textColor="#2C3E50"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Status Icon (Success/Error) -->
+    <TextView
+        android:id="@+id/statusIcon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/status_circle"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Buttons Container -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="32dp">
+
+        <!-- Retry Button -->
+        <Button
+            android:id="@+id/retryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Опитай отново"
+            android:background="@drawable/button_primary"
+            android:textColor="@color/white"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="gone" />
+
+        <!-- Skip Button (Development) -->
+        <Button
+            android:id="@+id/skipButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Пропусни"
+            android:background="@drawable/button_secondary"
+            android:textColor="#7F8C8D"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</LinearLayout>

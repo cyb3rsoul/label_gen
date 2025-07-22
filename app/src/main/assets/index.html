@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор на Етикети за Дрехи</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Генератор на Етикети за Дрехи</h1>
+        
+        <form id="labelForm">
+            <!-- Error Messages Area -->
+            <div id="errorMessages" class="error-messages" style="display: none;">
+                <h4>Моля, поправете следните грешки:</h4>
+                <ul id="errorList"></ul>
+            </div>
+
+            <!-- Origin -->
+            <div class="field-group">
+                <label for="origin">Произход (Произведено в)</label>
+                <select id="origin" name="origin" required>
+                    <option value="">Изберете държава...</option>
+                    <option value="България">България</option>
+                    <option value="Турция">Турция</option>
+                    <option value="Китай">Китай</option>
+                    <option value="Индия">Индия</option>
+                    <option value="Виетнам">Виетнам</option>
+                    <option value="Бангладеш">Бангладеш</option>
+                    <option value="Италия">Италия</option>
+                    <option value="Полша">Полша</option>
+                    <option value="Румъния">Румъния</option>
+                    <option value="Друго">Друго</option>
+                </select>
+            </div>
+
+            <!-- Custom Origin (if Other selected) -->
+            <div class="field-group" id="customOriginGroup" style="display: none;">
+                <label for="customOrigin">Друг Произход</label>
+                <input type="text" id="customOrigin" name="customOrigin" placeholder="Въведете име на държава" maxlength="50">
+            </div>
+
+            <!-- Manufacturer -->
+            <div class="field-group">
+                <label for="manufacturer">Производител</label>
+                <div class="autocomplete-container">
+                    <input type="text" id="manufacturer" name="manufacturer" required placeholder="Въведете производителска компания" maxlength="50" autocomplete="off">
+                    <div id="manufacturerDropdown" class="autocomplete-dropdown"></div>
+                </div>
+            </div>
+
+            <!-- Importer -->
+            <div class="field-group">
+                <label for="importer">Вносител</label>
+                <div class="autocomplete-container">
+                    <input type="text" id="importer" name="importer" required placeholder="Въведете вносителска компания" maxlength="50" autocomplete="off">
+                    <div id="importerDropdown" class="autocomplete-dropdown"></div>
+                </div>
+            </div>
+
+            <!-- Product/Article -->
+            <div class="field-group">
+                <label for="product">Артикул</label>
+                <div class="autocomplete-container">
+                    <input type="text" id="product" name="product" required placeholder="Въведете артикул" maxlength="50" autocomplete="off">
+                    <div id="productDropdown" class="autocomplete-dropdown"></div>
+                </div>
+            </div>
+
+            <!-- Contents/Materials -->
+            <div class="field-group">
+                <label>Състав (Материали)</label>
+                <div class="materials-container" id="materialsContainer">
+                    <!-- Material rows will be generated dynamically -->
+                </div>
+                <div class="materials-footer">
+                    <div class="percentage-total" id="percentageTotal">Общо: 0%</div>
+                </div>
+            </div>
+
+            <!-- Size -->
+            <div class="field-group">
+                <label for="sizeType">Тип Размер</label>
+                <div class="size-type-selector">
+                    <div class="radio-option">
+                        <input type="radio" id="sizeLetters" name="sizeType" value="letters" checked>
+                        <span class="radio-label">Букви (XS, S, M, L...)</span>
+                    </div>
+                    
+                    <div class="radio-option">
+                        <input type="radio" id="sizeNumbers" name="sizeType" value="numbers">
+                        <span class="radio-label">Числа (32, 34, 36...)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <div class="size-header">
+                    <label>Размери</label>
+                    <button type="button" id="addSizeBtn" class="btn-add-size" title="Добави размер">+</button>
+                </div>
+                <div class="sizes-container" id="sizesContainer">
+                    <!-- Size fields will be generated dynamically -->
+                </div>
+            </div>
+
+            <!-- Price in BGN -->
+            <div class="field-group">
+                <label for="priceBgn">Цена (BGN)</label>
+                <div class="price-input">
+                    <input type="number" id="priceBgn" name="priceBgn" 
+                           min="0" step="0.01" placeholder="0.00" 
+                           enterkeyhint="done" inputmode="decimal">
+                    <span class="currency">лв</span>
+                </div>
+            </div>
+
+            <!-- Price in EUR (Auto-calculated) -->
+            <div class="field-group">
+                <label for="priceEur">Цена (EUR) - автоматично изчислена</label>
+                <div class="price-input">
+                    <input type="number" id="priceEur" name="priceEur" 
+                           min="0" step="0.01" placeholder="0.00" 
+                           readonly>
+                    <span class="currency">€</span>
+                </div>
+            </div>
+
+            <!-- Auto-convert checkbox -->
+            <div class="field-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="autoConvert" checked>
+                    Автоматично преобразуване EUR ↔ BGN (Курс: 1 EUR = 1.9558 BGN)
+                </label>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <button type="button" id="previewBtn" class="btn btn-secondary">Преглед на Етикет</button>
+                <button type="button" id="printBtn" class="btn btn-primary">Печат на Етикет</button>
+                <button type="reset" class="btn btn-tertiary">Изчисти Формуляр</button>
+            </div>
+        </form>
+
+        <!-- Preview Area -->
+        <div id="previewArea" class="preview-area" style="display: none;">
+            <h3>Преглед на Етикет</h3>
+            <div id="labelPreview" class="label-preview"></div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
